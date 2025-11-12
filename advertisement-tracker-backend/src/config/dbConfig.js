@@ -3,7 +3,11 @@ const { Pool } = require("pg");
 const { createUserTable } = require("../db/createTables");
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
+   ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
 });
 
 const dbConnect = async () => {
