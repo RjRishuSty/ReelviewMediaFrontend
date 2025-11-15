@@ -4,10 +4,7 @@ const { createUserTable } = require("../db/createTables");
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-   ssl: {
-    require: true,
-    rejectUnauthorized: false,
-  },
+  ssl: false 
 });
 
 const dbConnect = async () => {
