@@ -32,7 +32,7 @@ app.use(
     cookie: {
       httpOnly:true,
       sameSite:'lax',
-      secure: false,
+      secure:  process.env.APP_MODE === "production",
       maxAge: 24 * 60 * 60 * 1000,
     }, // 1 day
   })
