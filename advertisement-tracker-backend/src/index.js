@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 //* Allow requests from your frontend
 app.use(cors({
-    origin: ['http://localhost:5173','https://main.d3104nj7rxx9wc.amplifyapp.com'],
+    origin: ['https://main.d3104nj7rxx9wc.amplifyapp.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true 
 }));
