@@ -33,31 +33,44 @@ const SidebarMenu = ({ open }) => {
           )}
 
           {/* Section Items */}
-          {section.items.map((item, index) => (
-            <ListItemButton
-              key={index}
-              sx={{
-                justifyContent: open ? "initial" : "center",
-                px: 2,
-                borderRadius: 2,
-                "&:hover": {
-                  bgcolor: "rgba(255,255,255,0.1)",
-                },
-              }}
-            >
-              <ListItemIcon
-                sx={{ color: "inherit", minWidth: 0, mr: open ? 2 : "auto" }}
-              >
-                {item.icon}
-              </ListItemIcon>
-              {open && <ListItemText primary={item.text} />}
-            </ListItemButton>
-          ))}
+          {section.items.map((item, index) => {
+            const logout = item.text === "Logout";
+            console.log(logout, "abc");
+            return (
+              <>
+                {logout ? (
+                  <LogoutBtn />
+                ) : (
+                  <ListItemButton
+                    key={index}
+                    sx={{
+                      justifyContent: open ? "initial" : "center",
+                      px: 2,
+                      borderRadius: 2,
+                      "&:hover": {
+                        bgcolor: "rgba(255,255,255,0.1)",
+                      },
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color: "inherit",
+                        minWidth: 0,
+                        mr: open ? 2 : "auto",
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    {open && <ListItemText primary={item.text} />}
+                  </ListItemButton>
+                )}
+              </>
+            );
+          })}
 
           {sectionIndex !== sidebarMenu.length - 1 && (
             <Divider sx={{ my: 1, backgroundColor: "rgba(255,255,255,0.2)" }} />
           )}
-          <LogoutBtn/>
         </React.Fragment>
       ))}
     </List>
