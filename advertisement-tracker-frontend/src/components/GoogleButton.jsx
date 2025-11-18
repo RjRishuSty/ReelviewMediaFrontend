@@ -2,8 +2,9 @@ import { Box, Button } from "@mui/material";
 import { API_BASE_URL } from "../utils/apiBaseUrl";
 
 const GoogleButton = () => { 
-
+ 
   const handleGoogleLogin = () => {
+   
     window.location.href = `${API_BASE_URL}/auth/google`;
   };
   return (

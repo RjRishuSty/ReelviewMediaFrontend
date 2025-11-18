@@ -10,13 +10,13 @@ const { handleProtectRoute } = require("../middlewares/auth.middlewar");
 
 const router = express.Router();
 
-router.post("/login",handleLoginWithEmailController);
+router.post("/login", handleLoginWithEmailController);
 router.post("/register", handleRegisterController);
 router.get(
   "/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    prompt: "select_account",   //controll choose email
+    prompt: "select_account", //controll choose email
   })
 );
 router.get(

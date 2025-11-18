@@ -20,8 +20,10 @@ import { authPageData } from "../data/authData";
 import { useState } from "react";
 import { handleLoginSubmit, handleRegisterSubmit } from "../utils/authHandler";
 import { useDispatch } from "react-redux";
+import { API_BASE_URL } from "../utils/apiBaseUrl";
 
 const AuthPage = () => {
+  console.log("in AUth page",API_BASE_URL)
   const laptop = useMediaQuery("(max-width:1136px)");
   const isTablet = useMediaQuery("(max-width:900px)");
   const isMobile = useMediaQuery("(max-width:600px)");
