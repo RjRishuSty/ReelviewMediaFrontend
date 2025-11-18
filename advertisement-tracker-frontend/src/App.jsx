@@ -12,39 +12,41 @@ import { useAuthCheck } from "./hooks/useAuthCheck";
 import DashboardLayout from "./layouts/DashboardLayout";
 import ServicePage from "./pages/ServicePage";
 import SkeletonLoader from "./components/Loader/SkeletonLoader";
+import { useSelector } from "react-redux";
 
 const App = () => {
   const loading = useAuthCheck();
+  const isAuth = useSelector((state) => state.auth.user);
+  console.log("inApp.js", isAuth);
+
   if (loading) return <SkeletonLoader />;
-
-
   const router = createBrowserRouter([
-     // Public routes
-    {
-      path: "/",
-      element: <AppLayout />,
-      children: [
-        { index: true, element: <HomePage /> },
-        { path: "about", element: <AboutPage /> },
-        { path: "service", element: <ServicePage /> },
-        { path: "contact", element: <ContactPage /> },
-        { path: "login", element: <AuthPage /> },
-        { path: "register", element: <AuthPage /> },
-      ],
-    },
-    // Protected routes
-    {
-      path: "/",
-      element: (
-        <ProtectedRoute>
-          <DashboardLayout />
-        </ProtectedRoute>
-      ),
-      children: [
-        { path: "dashboard", element: <DashboardPage /> },
-        { path: "profile", element: <ProfilePage /> },
-      ],
-    },
+    // Public routes
+    !isAuth
+      ? {
+          path: "/",
+          element: <AppLayout />,
+          children: [
+            { index: true, element: <HomePage /> },
+            { path: "about", element: <AboutPage /> },
+            { path: "service", element: <ServicePage /> },
+            { path: "contact", element: <ContactPage /> },
+            { path: "login", element: <AuthPage /> },
+            { path: "register", element: <AuthPage /> },
+          ],
+        }
+      : {
+          path: "/",
+          element: (
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          ),
+          children: [
+            { path: "dashboard", element: <DashboardPage /> },
+            { path: "profile", element: <ProfilePage /> },
+          ],
+        },
     {
       path: "*",
       element: <PageNotFound />,
