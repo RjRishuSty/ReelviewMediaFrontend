@@ -9,61 +9,40 @@ import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuthCheck } from "./hooks/useAuthCheck";
-import { useSelector } from "react-redux";
 import DashboardLayout from "./layouts/DashboardLayout";
 import ServicePage from "./pages/ServicePage";
 import SkeletonLoader from "./components/Loader/SkeletonLoader";
 
 const App = () => {
   const loading = useAuthCheck();
-  console.log("Loading", loading);
-  const isAuth = useSelector((state)=>state.auth.isAuthorized)
-  console.log("ISAuth",isAuth)
+  if (loading) return <SkeletonLoader />;
+
+
   const router = createBrowserRouter([
+     // Public routes
     {
       path: "/",
-      element: isAuth?<DashboardLayout/>:<AppLayout />,
+      element: <AppLayout />,
       children: [
-        {
-          index: true,
-          element: <HomePage />,
-        },
-        {
-          path: "/about",
-          element: <AboutPage />,
-        },
-        {
-          path: "/service",
-          element: <ServicePage />,
-        },
-        {
-          path: "/contact",
-          element: <ContactPage />,
-        },
-        {
-          path: "/login",
-          element: <AuthPage />,
-        },
-        {
-          path: "/register",
-          element: <AuthPage />,
-        },
-        {
-          path: "/dashboard",
-          element: (
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/profile",
-          element: (
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          ),
-        },
+        { index: true, element: <HomePage /> },
+        { path: "about", element: <AboutPage /> },
+        { path: "service", element: <ServicePage /> },
+        { path: "contact", element: <ContactPage /> },
+        { path: "login", element: <AuthPage /> },
+        { path: "register", element: <AuthPage /> },
+      ],
+    },
+    // Protected routes
+    {
+      path: "/",
+      element: (
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
+      ),
+      children: [
+        { path: "dashboard", element: <DashboardPage /> },
+        { path: "profile", element: <ProfilePage /> },
       ],
     },
     {
@@ -71,7 +50,6 @@ const App = () => {
       element: <PageNotFound />,
     },
   ]);
-  if (loading) return <SkeletonLoader/>
 
   return <RouterProvider router={router} />;
 };

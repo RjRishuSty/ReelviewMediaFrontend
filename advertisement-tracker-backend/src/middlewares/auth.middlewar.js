@@ -2,7 +2,7 @@ const { verifyToken } = require("../utils/jwt");
 
 const handleProtectRoute = (req, res, next) => {
   try {
-    const token = req.cookies.token; // token from cookies
+    const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });
     }

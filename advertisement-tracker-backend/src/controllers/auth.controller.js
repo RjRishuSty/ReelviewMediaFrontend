@@ -98,7 +98,7 @@ const handleLoginController = async (req, res) => {
     });
     res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (err) {
-    console.error("Google callback error:", err.message);
+    console.error("Google callback error:",err);
     res.status(500).send("Login failed. Please try again.");
   }
 };
