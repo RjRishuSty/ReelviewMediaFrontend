@@ -2,11 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const cors = require('cors');
+const cors = require("cors");
 const passport = require("passport");
 //* Custome file...........
 const authRoutes = require("./routes/auth.routes");
-const dashboardRoutes = require('./routes/dashboard.routes');
+const dashboardRoutes = require("./routes/dashboard.routes");
 const { dbConnect } = require("./config/dbConfig");
 require("./config/passport");
 
@@ -18,11 +18,16 @@ app.use(express.json());
 app.use(cookieParser());
 
 //* Allow requests from your frontend
-app.use(cors({
-    origin: ['https://13-127-178-247.sslip.io','https://main.d3104nj7rxx9wc.amplifyapp.com'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    credentials: true 
-}));
+app.use(
+  cors({
+    origin: [
+      "https://main.d3104nj7rxx9wc.amplifyapp.com",
+      "https://13-127-178-247.sslip.io",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(
   session({
@@ -30,9 +35,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly:true,
-      sameSite:'lax',
-      secure:  process.env.APP_MODE === "production",
+      httpOnly: true,
+      sameSite: "none",
+      secure: process.env.APP_MODE === "production",
       maxAge: 24 * 60 * 60 * 1000,
     }, // 1 day
   })
@@ -41,14 +46,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
- 
 //! Routes............
- 
+
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1", dashboardRoutes);   //change karana ha....
+app.use("/api/v1", dashboardRoutes); //change karana ha....
 
 //! Start server and connect DB connection
-app.listen(PORT,"0.0.0.0", async () => {   //Setp -2 
+app.listen(PORT, "0.0.0.0", async () => {
+  //Setp -2
   try {
     await dbConnect();
     console.log(`Server is running on http://0.0.0.0:${PORT}`);
