@@ -20,37 +20,46 @@ const App = () => {
   console.log("inApp.js", isAuth);
 
   if (loading) return <SkeletonLoader />;
+
   const router = createBrowserRouter([
-    // Public routes
-    !isAuth
-      ? {
-          path: "/",
-          element: <AppLayout />,
-          children: [
-            { index: true, element: <HomePage /> },
-            { path: "about", element: <AboutPage /> },
-            { path: "service", element: <ServicePage /> },
-            { path: "contact", element: <ContactPage /> },
-            { path: "login", element: <AuthPage /> },
-            { path: "register", element: <AuthPage /> },
-          ],
-        }
-      : {
-          path: "/",
+    {
+      path: "/",
+      element: isAuth ? (
+        <DashboardLayout />
+      ) : (
+        <AppLayout />
+      ),
+      children: [
+        // Public pages
+        { index: true, element: <HomePage /> },
+        { path: "about", element: <AboutPage /> },
+        { path: "service", element: <ServicePage /> },
+        { path: "contact", element: <ContactPage /> },
+        { path: "login", element: <AuthPage /> },
+        { path: "register", element: <AuthPage /> },
+
+        // Protected pages
+        {
+          path: "dashboard",
           element: (
             <ProtectedRoute>
-              <DashboardLayout />
+              <DashboardPage />
             </ProtectedRoute>
           ),
-          children: [
-            { path: "dashboard", element: <DashboardPage /> },
-            { path: "profile", element: <ProfilePage /> },
-          ],
         },
-    {
-      path: "*",
-      element: <PageNotFound />,
+        {
+          path: "profile",
+          element: (
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          ),
+        },
+      ],
     },
+
+    // 404 page
+    { path: "*", element: <PageNotFound /> },
   ]);
 
   return <RouterProvider router={router} />;
