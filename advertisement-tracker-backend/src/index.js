@@ -29,6 +29,10 @@ app.use(
   })
 );
 
+const isSecure =
+  process.env.APP_MODE === "production" ||
+  process.env.NODE_ENV === "production";
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -37,7 +41,7 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: "none",
-      secure: process.env.APP_MODE == "production",
+      secure: isSecure,
       maxAge: 24 * 60 * 60 * 1000,
     }, // 1 day
   })
