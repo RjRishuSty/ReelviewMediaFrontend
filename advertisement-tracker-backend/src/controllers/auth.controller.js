@@ -93,7 +93,8 @@ const handleLoginController = async (req, res) => {
     const { user, token } = await handleCreateUserService(req.user);
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.APP_MODE === "production",
+      secure: true,
+      sameSite: 'None',
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
