@@ -19,7 +19,7 @@ app.use(cookieParser());
 
 //* Allow requests from your frontend
 app.use(cors({
-    origin: ['https://main.d3104nj7rxx9wc.amplifyapp.com'],
+    origin: ['https://13-127-178-247.sslip.io','https://main.d3104nj7rxx9wc.amplifyapp.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true 
 }));
