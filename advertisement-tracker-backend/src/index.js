@@ -4,7 +4,6 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const passport = require("passport");
-//* Custome file...........
 const authRoutes = require("./routes/auth.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
 const { dbConnect } = require("./config/dbConfig");
@@ -12,12 +11,13 @@ require("./config/passport");
 
 const app = express();
 const PORT = process.env.PORT;
-
-//! Middleware................
+app.set("trust proxy", 1);
+app.use(helmet());
+app.use(hpp());
+app.disable("x-powered-by");
 app.use(express.json());
 app.use(cookieParser());
 
-//* Allow requests from your frontend
 app.use(
   cors({
     origin: [
@@ -38,9 +38,9 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: "none",
-      secure: true,
+      secure:process.env.APP_MODE === "production",
       maxAge: 24 * 60 * 60 * 1000,
-    }, // 1 day
+    }, 
   })
 );
 

@@ -59,7 +59,7 @@ const handleRegisterController = async (req, res) => {
         message: "This email is already registered. Please log in instead.",
       });
 
-    const response  = await handleCreateUserService({
+    const response = await handleCreateUserService({
       full_name,
       email,
       password,
@@ -91,15 +91,10 @@ const handleRegisterController = async (req, res) => {
 const handleLoginController = async (req, res) => {
   try {
     const { user, token } = await handleCreateUserService(req.user);
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+     setAuthCookie(res, token);
     res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
   } catch (err) {
-    console.error("Google callback error:",err);
+    console.error("Google callback error:", err);
     res.status(500).send("Login failed. Please try again.");
   }
 };
@@ -130,7 +125,9 @@ const handlerLogoutController = async (req, res) => {
     res.status(500).json({ success: false, message: "Logout failed" });
   } catch (err) {
     console.error("Logout error:", err);
-    res.status(500).json({ success: false, message: "Logout failed" });
+    res
+      .status(500)
+      .json({ success: false, message: "Logout failed", err: err });
   }
 };
 

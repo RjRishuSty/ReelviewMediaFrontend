@@ -25,7 +25,7 @@ router.get(
     failureRedirect: "/login",
     session: false,
   }),
-  handleLoginController
+  handleLoginController 
 );
 
 router.get("/logout", handleProtectRoute, handlerLogoutController);
