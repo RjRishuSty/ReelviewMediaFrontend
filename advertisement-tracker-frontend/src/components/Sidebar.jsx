@@ -23,6 +23,7 @@ const Sidebar = ({ isOpen, closeSidebar,scrolled }) => {
       }}
       ModalProps={{
         keepMounted: true,
+        
       }}
     >
       <Box sx={{ mt: 1}}>

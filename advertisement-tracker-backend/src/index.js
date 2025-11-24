@@ -12,9 +12,6 @@ require("./config/passport");
 const app = express();
 const PORT = process.env.PORT;
 app.set("trust proxy", 1);
-app.use(helmet());
-app.use(hpp());
-app.disable("x-powered-by");
 app.use(express.json());
 app.use(cookieParser());
 
