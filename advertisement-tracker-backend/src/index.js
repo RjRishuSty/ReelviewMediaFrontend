@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://main.d3104nj7rxx9wc.amplifyapp.com",
+      "https://main.d350v64dhkzl0e.amplifyapp.com",
       "https://13-127-178-247.sslip.io",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -34,12 +34,14 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
+      secure: process.env.APP_MODE === "production",
       sameSite: "none",
-      secure:process.env.APP_MODE === "production",
       maxAge: 24 * 60 * 60 * 1000,
-    }, 
+      domain: process.env.COOKIE_DOMAIN, 
+    },
   })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
